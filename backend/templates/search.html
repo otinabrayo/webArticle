@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Search</title>
+</head>
+<body>
+    <h1>Search Articles</h1>
+    <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search for articles..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const query = document.getElementById('searchInput').value;
+            fetch(`http://127.0.0.1:8000/articles/?search=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById('results');
+                    resultsContainer.innerHTML = ''; // Clear previous results
+                    if (data.length === 0) {
+                        resultsContainer.innerHTML = '<p>No articles found.</p>';
+                    } else {
+                        data.forEach(article => {
+                            const articleElement = document.createElement('div');
+                            articleElement.innerHTML = `
+                                <h2>${article.title}</h2>
+                                <p>${article.content}</p>
+                            `;
+                            resultsContainer.appendChild(articleElement);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching articles:', error));
+        });
+    </script>
+</body>
+</html>

@@ -5,9 +5,4 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'content', 'slug', 'published')
-
-
-    def create(self, validated_data):
-        return Article.objects.create(**validated_data)
-
+        fields = '__all__'

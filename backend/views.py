@@ -27,6 +27,25 @@ class ArticlePost(generics.RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     # permission_classes = [IsAuthenticated]
+    
+'''
+class Register(generics.CreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def perform_create(self, serializer):
+        """
+        Override perform_create to handle the object creation
+        similar to custom behavior with an if statement.
+        """
+        if serializer.is_valid():  # This check happens internally in `CreateAPIView`, but you can add extra logic here if needed.
+            serializer.save()  # Saves the new user instance to the database
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            # Instead of handling it here, errors are handled automatically by CreateAPIView
+            # But if you want custom error handling, you can raise exceptions or modify as needed
+            self.handle_error(serializer.errors)
+'''
 
 class Register(APIView):
     def post(self, request):

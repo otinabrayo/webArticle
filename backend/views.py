@@ -4,8 +4,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters, status
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
 
 def search_page(request):
     return render(request, 'search.html')
@@ -16,18 +17,20 @@ def register_page(request):
 class ArticleList(generics.ListCreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    # permission_classes = [IsAuthenticated]
-    # permission_classes = [IsAdminUser, IsAuthenticated]
+    # authentication_classes =(TokenAuthentication, )
+    permission_classes = [IsAuthenticated]
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     # filterset_fields = ['title', 'content',]
     search_fields = ['title', 'content']
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 class ArticlePost(generics.RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    # permission_classes = [IsAuthenticated]
-    
+
 '''
 class Register(generics.CreateAPIView):
     queryset = Article.objects.all()

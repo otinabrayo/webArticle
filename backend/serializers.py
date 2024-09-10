@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class ArticleSerializer(serializers.ModelSerializer):
     slug = serializers.SlugField(read_only=True)
+    author = serializers.StringRelatedField()
 
     class Meta:
         model = Article

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from backend.views import Register
+# from backend.views import Register
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 

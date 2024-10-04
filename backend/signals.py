@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from .models import Article
 from django.template.defaultfilters import slugify
 
+
 @receiver(pre_save, sender=Article)
 def add_slug(sender, instance, *args, **kwargs):
     if instance and not instance.slug:

@@ -12,7 +12,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['web-article.herokuapp.com', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
